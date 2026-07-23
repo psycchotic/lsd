@@ -68,3 +68,44 @@ void *memcpy(void *dest, const void *src, size_t n) {
 
   return dest;
 }
+
+size_t strlen(const char *str) {
+  const char *p = str;
+
+  while ((uintptr_t)p & (sizeof(uintptr_t) - 1)) {
+    if (*p == '\0') {
+      return p - str;
+    }
+    p++;
+  }
+
+  const uintptr_t *word_ptr = (const uintptr_t *)p;
+
+  const uintptr_t low_bits = (uintptr_t)-1 / 0xFF;
+  const uintptr_t high_bits = low_bits << 7;
+
+  for (;;) {
+    uintptr_t v = *word_ptr;
+
+    if ((v - low_bits) & ~v & high_bits) {
+
+      p = (const char *)word_ptr;
+      if (p[0] == '\0')
+        return p - str;
+      if (p[1] == '\0')
+        return p + 1 - str;
+      if (p[2] == '\0')
+        return p + 2 - str;
+      if (p[3] == '\0')
+        return p + 3 - str;
+      if (p[4] == '\0')
+        return p + 4 - str;
+      if (p[5] == '\0')
+        return p + 5 - str;
+      if (p[6] == '\0')
+        return p + 6 - str;
+      return p + 7 - str;
+    }
+    word_ptr++;
+  }
+}

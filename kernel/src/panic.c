@@ -26,7 +26,7 @@ void halt_catchfire(void) {
   }
 }
 
-struct regs_x86 {
+struct panic_regs_x86 {
   uint64_t rax, rbx, rcx, rdx;
   uint64_t rsi, rdi;
   uint64_t rbp, rsp;
@@ -40,7 +40,7 @@ void dump_registers() {
 #if !defined(__x86_64__)
   printk("* Register dump not supported for current architecture");
 #else
-  struct regs_x86 r;
+  struct panic_regs_x86 r;
 
   __asm__ volatile("mov %%rax,%0\n\t"
                    "mov %%rbx,%1\n\t"

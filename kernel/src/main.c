@@ -7,10 +7,12 @@
 #include <allocator/pmm.h>
 #include <fb/fbtext.h>
 
+#include <io/idt.h>
 #include <limine/requests.h>
 #include <panic.h>
 #include <utils/archname.h>
 #include <utils/kassert.h>
+#include <utils/memory.h>
 #include <utils/printk.h>
 
 const char *mchunk_type_to_str(uint32_t t) {
@@ -56,7 +58,7 @@ void kmain(void) {
             arch_name());
 
   pmm_init();
-
+  idt_init();
   void *a = kmalloc(PAGE_SIZE);
   if (!a) {
     klog_error("Out of memory");
@@ -66,6 +68,9 @@ void kmain(void) {
   klog_info("Allocated 1 page (size %llu bytes) at 0x%p", PAGE_SIZE, a);
   kfree(a);
   klog_info("Free'd page at 0x%p", a);
-  kpanic("Panic test!");
+
+  // int b = 1 / 0;
+  // klog_info("%d", b);
+
   halt_catchfire();
 }
