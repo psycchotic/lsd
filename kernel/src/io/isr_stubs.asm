@@ -3,7 +3,8 @@ bits 64
 %macro EXCEPTION_NO_ERR_CODE 1
 global exception_handler_%1
 exception_handler_%1:
-    push qword 0       push qword %1 
+    push qword 0
+    push qword %1
     jmp common_exception_wrapper
 %endmacro
 
