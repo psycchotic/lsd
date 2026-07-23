@@ -56,6 +56,14 @@ void kmain(void) {
             arch_name());
 
   pmm_init();
+  void *a = kmalloc(PAGE_SIZE);
+  if (!a) {
+    klog_error("Out of memory");
+    halt_catchfire();
+  }
 
+  klog_info("Allocated 1 page (size %llu bytes) at 0x%p", PAGE_SIZE, a);
+  kfree(a);
+  klog_info("Free'd page at 0x%p", a);
   halt_catchfire();
 }
