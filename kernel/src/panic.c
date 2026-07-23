@@ -80,7 +80,7 @@ void dump_registers() {
   printk("* R10: %p  R11: %p\n", r.r10, r.r11);
   printk("* R12: %p  R13: %p\n", r.r12, r.r13);
   printk("* R14: %p  R15: %p\n", r.r14, r.r15);
-  printk("* RIP: %p  RFLAGS: %p\n", r.rip, r.rflags);
+  printk("* RIP: %p  RFL: %p\n", r.rip, r.rflags);
 #endif
 }
 
